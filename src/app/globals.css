@@ -1,26 +1,281 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary-50: 49 100% 91% /* hsl(49 100% 91%) */;
+    --primary-700: 49 100% 59% /* hsl(49 100% 59%) */;
+    --secondary-50: 25 100% 94% /* hsl(25 100% 94%) */;
+    --secondary-700: 0 100% 67% /* hsl(0 100% 67%) */;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --button-elevation: 2.4px 2.4px 0px black;
+    --button-xl-elevation: 8px 8px 0px black;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary-50: hsl(var(--primary-50));
+  --color-primary-700: hsl(var(--primary-700));
+  --color-secondary-50: hsl(var(--secondary-50));
+  --color-secondary-700: hsl(var(--secondary-700));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --shadow-btn: var(--button-elevation);
+  --shadow-btn-xl: var(--button-xl-elevation);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility container {
+  @apply px-3 mx-auto;
+
+  @variant sm {
+    @apply px-4;
+  }
+
+  @variant lg {
+    @apply px-10;
+  }
+
+  @variant xl {
+    @apply px-8 max-w-[1440px];
+  }
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--body-font);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom CSS */
+
+/* Typography */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-title {
+    font-family: var(--header-font);
+  }
+  h1 {
+    @apply text-3xl sm:text-4xl xl:text-5xl xl:leading-16;
+  }
+  h2 {
+    @apply text-[2rem] lg:text-[2.5rem];
+  }
+  h3 {
+    @apply text-lg lg:text-xl;
+  }
+
+  .font-body {
+    font-family: var(--body-font);
+  }
+}
+
+/* Hero Section */
+.hero {
+  @apply bg-gradient-to-tl from-secondary-50 to-primary-50 rounded-2xl m-4 flex items-center justify-center;
+}
+
+.hero .container {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 h-full items-end;
+}
+
+.hero .container .hero__left ul {
+  @apply flex flex-col gap-5;
+}
+
+.hero .container .hero__left ul > li {
+  @apply flex gap-3;
+}
+
+.bullet {
+  @apply w-6 h-6 bg-secondary-700 rounded-full text-white flex items-center justify-center shrink-0;
+}
+
+.hero .hero__left {
+  @apply flex flex-col gap-6 justify-center pb-20;
+}
+
+.hero .hero__right {
+  @apply overflow-hidden relative;
+  background: radial-gradient(
+    circle,
+    rgba(255, 86, 86, 0.5) 20%,
+    rgba(255, 86, 86, 0) 64%
+  );
+}
+
+.hero .hero__label {
+  @apply py-4 px-5 rounded-md backdrop-blur-[6.80px] inline-flex items-center gap-5 absolute z-10 bg-white/50 transition-all duration-300 ease-in-out;
+}
+.hero .hero__label.left {
+  @apply rotate-x-15 -rotate-y-30 hover:rotate-x-0 hover:-rotate-y-0;
+}
+.hero .hero__label.right {
+  @apply rotate-x-15 rotate-y-30 hover:rotate-x-0 hover:-rotate-y-0;
+}
+.hero .hero__label svg {
+  @apply w-8 h-8;
+}
+
+/* Layout */
+.section-py {
+  @apply space-y-8 lg:space-y-10;
+}
+
+/* Product Card */
+
+.products,
+.testimonials {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+.product-card {
+  @apply border border-slate-200 rounded-2xl hover:shadow-md overflow-hidden transition-all duration-300;
+}
+
+.product-card .product-card__image {
+  @apply h-[278px] overflow-hidden relative;
+}
+
+.product-card .product-card__content {
+  @apply p-5 flex flex-col gap-5 overflow-hidden relative;
+}
+
+.product-card .product-card__content h3 {
+  @apply min-h-[84px];
+}
+
+.testimonials {
+  @apply lg:grid-cols-2;
+}
+
+.testimonials .testimonial-card {
+  @apply rounded-2xl hover:shadow-md overflow-hidden transition-all duration-300 p-6 flex flex-col gap-6 justify-between;
+}
+
+.testimonials .testimonial-card:nth-child(odd) {
+  @apply bg-secondary-50;
+}
+
+.testimonials .testimonial-card:nth-child(even) {
+  @apply bg-primary-50;
+}
+
+.testimonial-card__author {
+  @apply flex items-center gap-4;
+}
+
+/* footer CTA */
+.footer-cta {
+  @apply py-20 px-10 lg:px-54 flex flex-col items-center justify-center gap-10 bg-no-repeat bg-cover bg-center rounded-2xl overflow-hidden;
+  background-image: url("/images/footer-cta-hero.png");
+}
+
+/* footer */
+footer .footer-content {
+  @apply flex flex-col gap-10 rounded-2xl bg-secondary-700 p-10 items-center;
 }
